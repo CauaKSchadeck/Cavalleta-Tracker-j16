@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Importa os ícones.
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 // Importa componentes do React Native.
 import {
@@ -17,6 +18,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { logout } from '../services/storage/authStorage';
+
 // Importa as telas.
 import HomeScreen from '../screens/Home';
 
@@ -26,6 +29,7 @@ const Tab = createBottomTabNavigator();
 const DRAWER_WIDTH = 280;
 
 export default function BottomTabs() {
+    const navigation = useNavigation<any>();
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [drawerTranslate] = useState(() => new Animated.Value(-DRAWER_WIDTH));
 
@@ -46,6 +50,21 @@ export default function BottomTabs() {
         }).start(() => {
             setDrawerOpen(false);
         });
+    }
+
+    async function handleLogout() {
+        closeDrawer();
+        await logout();
+
+        const parent = navigation.getParent?.();
+        const root = parent?.getParent?.() ?? parent;
+
+        if (root?.replace) {
+            root.replace('Login');
+            return;
+        }
+
+        navigation.replace('Login');
     }
 
     return (
@@ -125,6 +144,16 @@ export default function BottomTabs() {
                     />
                     <Text style={styles.drawerText}>Sobre</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity style={styles.drawerItem} onPress={handleLogout}>
+                    <MaterialIcons
+                        name="logout"
+                        size={22}
+                        color="#D32F2F"
+                        style={styles.drawerIcon}
+                    />
+                    <Text style={[styles.drawerText, styles.logoutText]}>Sair</Text>
+                </TouchableOpacity>
             </Animated.View>
 
             {drawerOpen && (
@@ -200,6 +229,10 @@ const styles = StyleSheet.create({
     drawerText: {
         fontSize: 16,
         color: '#222',
+    },
+    logoutText: {
+        color: '#D32F2F',
+        fontWeight: '600',
     },
     backdrop: {
         position: 'absolute',

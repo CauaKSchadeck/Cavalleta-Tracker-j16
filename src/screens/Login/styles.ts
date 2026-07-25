@@ -59,6 +59,25 @@ export const styles = StyleSheet.create({
         fontSize: 16,
 
     },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        paddingHorizontal: 12,
+        height: 50,
+        marginBottom: 15,
+    },
+    inputIcon: {
+        marginRight: 8,
+    },
+    inputWithIcon: {
+        flex: 1,
+        fontSize: 16,
+        color: '#222',
+    },
 
     button: {
 

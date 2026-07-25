@@ -12,10 +12,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import TrackerCard from '../../components/Card/TrackerCard';
-import AddTrackerModal from '../../components/Modal/AddTrackerModal';
+import AddTrackerModal from '../../components/Modal/AddTrackerModal/AddTrackerModal';
 import EmptyList from '../../components/List/EmptyList';
 
-import { logout } from '../../services/storage/authStorage';
 import { styles } from './styles';
 
 interface Tracker {
@@ -33,6 +32,7 @@ const STORAGE_KEY = '@cavalleta:trackers';
 export default function Home({ navigation }: Props) {
     const [trackers, setTrackers] = useState<Tracker[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [editingTracker, setEditingTracker] = useState<Tracker | null>(null);
 
     useEffect(() => {
         loadTrackers();
@@ -72,6 +72,39 @@ export default function Home({ navigation }: Props) {
         await saveTrackers([newTracker, ...trackers]);
     }
 
+    async function handleEditTracker(id: string, name: string, phone: string) {
+        const nextTrackers = trackers.map(tracker =>
+            tracker.id === id ? { ...tracker, name, phone } : tracker
+        );
+
+        await saveTrackers(nextTrackers);
+    }
+
+    function openAddModal() {
+        setEditingTracker(null);
+        setModalVisible(true);
+    }
+
+    function openEditModal(tracker: Tracker) {
+        setEditingTracker(tracker);
+        setModalVisible(true);
+    }
+
+    function closeModal() {
+        setModalVisible(false);
+        setEditingTracker(null);
+    }
+
+    async function handleSaveTracker(name: string, phone: string) {
+        if (editingTracker) {
+            await handleEditTracker(editingTracker.id, name, phone);
+        } else {
+            await handleAddTracker(name, phone);
+        }
+
+        closeModal();
+    }
+
     async function handleDeleteTracker(id: string) {
         Alert.alert(
             'Remover rastreador',
@@ -104,45 +137,24 @@ export default function Home({ navigation }: Props) {
         );
     }
 
-    async function handleLogout() {
-        await logout();
-
-        const parent = navigation.getParent?.();
-        const root = parent?.getParent?.() ?? parent;
-
-        if (root?.replace) {
-            root.replace('Login');
-            return;
-        }
-
-        navigation.replace('Login');
-    }
-
     return (
         <View style={styles.container}>
-            <View style={localStyles.header}>
-                <Text style={styles.title}>Home do Cavalleta Connect</Text>
+            <View style={styles.header}>
 
-                <TouchableOpacity
-                    style={localStyles.logoutButton}
-                    onPress={handleLogout}
-                >
-                    <Text style={localStyles.logoutText}>Sair</Text>
-                </TouchableOpacity>
             </View>
 
             <TouchableOpacity
-                style={localStyles.addButton}
-                onPress={() => setModalVisible(true)}
+                style={styles.addButton}
+                onPress={openAddModal}
             >
-                <Text style={localStyles.addButtonText}>Adicionar Rastreador</Text>
+                <Text style={styles.addButtonText}>Adicionar Rastreador</Text>
             </TouchableOpacity>
 
             <FlatList
                 data={trackers}
                 keyExtractor={item => item.id}
                 contentContainerStyle={
-                    trackers.length === 0 && localStyles.emptyListContainer
+                    trackers.length === 0 && styles.emptyListContainer
                 }
                 ListEmptyComponent={<EmptyList />}
                 renderItem={({ item }) => (
@@ -150,53 +162,22 @@ export default function Home({ navigation }: Props) {
                         tracker={item}
                         onDelete={handleDeleteTracker}
                         onLocate={handleLocateTracker}
+                        onEdit={openEditModal}
                     />
                 )}
             />
 
             <AddTrackerModal
                 visible={modalVisible}
-                onClose={() => setModalVisible(false)}
-                onAdd={handleAddTracker}
+                onClose={closeModal}
+                onAdd={handleSaveTracker}
+                initialName={editingTracker?.name ?? ''}
+                initialPhone={editingTracker?.phone ?? ''}
+                title={editingTracker ? 'Editar Rastreador' : 'Novo Rastreador'}
+                submitLabel={editingTracker ? 'Salvar' : 'Adicionar'}
             />
         </View>
     );
 }
 
-const localStyles = StyleSheet.create({
-    header: {
-        width: '100%',
-        paddingHorizontal: 20,
-        paddingTop: 30,
-        paddingBottom: 18,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    logoutButton: {
-        backgroundColor: '#D32F2F',
-        borderRadius: 8,
-        paddingVertical: 10,
-        paddingHorizontal: 16,
-    },
-    logoutText: {
-        color: '#FFF',
-        fontWeight: 'bold',
-    },
-    addButton: {
-        marginHorizontal: 20,
-        marginBottom: 16,
-        borderRadius: 8,
-        backgroundColor: '#1976D2',
-        paddingVertical: 14,
-        alignItems: 'center',
-    },
-    addButtonText: {
-        color: '#FFF',
-        fontWeight: 'bold',
-    },
-    emptyListContainer: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-});
+

@@ -10,11 +10,13 @@ import {
     Alert,
 } from 'react-native';
 
+import { MaterialIcons } from '@expo/vector-icons';
+
 // Importa os estilos.
 import { styles } from './styles';
 
 // Serviço responsável pela autenticação.
-import { login } from '../../services/auth';
+import { login } from '../../services/Auth';
 
 export default function Login({ navigation }: any) {
 
@@ -84,24 +86,29 @@ export default function Login({ navigation }: any) {
                 autoCapitalize="none"
 
                 value={username}
+                placeholderTextColor="#8E8E93"
 
                 onChangeText={setUsername}
 
             />
 
-            <TextInput
+            <View style={styles.inputContainer}>
+                <MaterialIcons
+                    name="lock-outline"
+                    size={22}
+                    color="#8E8E93"
+                    style={styles.inputIcon}
+                />
 
-                style={styles.input}
-
-                placeholder="Senha"
-
-                secureTextEntry
-
-                value={password}
-
-                onChangeText={setPassword}
-
-            />
+                <TextInput
+                    style={styles.inputWithIcon}
+                    placeholder="Senha"
+                    placeholderTextColor="#8E8E93"
+                    secureTextEntry
+                    value={password}
+                    onChangeText={setPassword}
+                />
+            </View>
 
             <TouchableOpacity
 

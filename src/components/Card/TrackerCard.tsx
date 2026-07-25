@@ -26,6 +26,8 @@ interface Props {
 
     onLocate(id: string): void;
 
+    onEdit(tracker: Tracker): void;
+
 }
 
 export default function TrackerCard({
@@ -35,6 +37,8 @@ export default function TrackerCard({
     onDelete,
 
     onLocate,
+
+    onEdit,
 
 }: Props) {
 
@@ -69,21 +73,33 @@ export default function TrackerCard({
 
                 </Text>
 
-                <TouchableOpacity
-                    onPress={() => onDelete(tracker.id)}
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
                 >
+                    <TouchableOpacity
+                        onPress={() => onEdit(tracker)}
+                        style={{ marginRight: 12 }}
+                    >
+                        <MaterialIcons
+                            name="edit"
+                            size={24}
+                            color="#1976D2"
+                        />
+                    </TouchableOpacity>
 
-                    <MaterialIcons
-
-                        name="delete"
-
-                        size={24}
-
-                        color="#D32F2F"
-
-                    />
-
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => onDelete(tracker.id)}
+                    >
+                        <MaterialIcons
+                            name="delete"
+                            size={24}
+                            color="#D32F2F"
+                        />
+                    </TouchableOpacity>
+                </View>
 
             </View>
 
