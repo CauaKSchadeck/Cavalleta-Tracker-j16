@@ -13,7 +13,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Telas.
 import Login from '../screens/Login';
 
+import DrawerNavigator from './DrawerNavigator';
+
 import BottomTabs from './TabNavigator';
+
+import Sms from '../screens/SMS';
+
+import Map from '../screens/Map';
+
+import History from '../screens/History';
 
 // Serviço responsável por verificar se existe uma sessão salva.
 import { getSession } from '../services/storage/authStorage';
@@ -71,29 +79,19 @@ export default function AppRoutes() {
         <NavigationContainer>
 
             <Stack.Navigator
-
-                initialRouteName={initialRoute}
-
                 screenOptions={{
                     headerShown: false,
                 }}
-
             >
 
                 <Stack.Screen
-
                     name="Login"
-
                     component={Login}
-
                 />
 
                 <Stack.Screen
-
                     name="Home"
-
-                    component={BottomTabs}
-
+                    component={DrawerNavigator}
                 />
 
             </Stack.Navigator>

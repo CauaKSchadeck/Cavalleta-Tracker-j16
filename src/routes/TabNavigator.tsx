@@ -23,6 +23,11 @@ import { logout } from '../services/storage/authStorage';
 // Importa as telas.
 import HomeScreen from '../screens/Home';
 
+import SmsScreen from '../screens/SMS';
+
+import MapScreen from '../screens/Map';
+
+import History from '../screens/History';
 // Cria o Bottom Tab Navigator.
 const Tab = createBottomTabNavigator();
 
@@ -104,6 +109,51 @@ export default function BottomTabs() {
                             ),
                         }}
                     />
+
+                    <Tab.Screen
+                        name="MapScreen"
+                        component={MapScreen}
+                        options={{
+                            title: "Mapa",
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialIcons
+                                    name="map"
+                                    color={color}
+                                    size={size}
+                                />
+                            ),
+                        }}
+                    />
+                    <Tab.Screen
+                        name="SmsScreen"
+                        component={SmsScreen}
+                        options={{
+                            title: "SMS",
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialIcons
+                                    name="sms"
+                                    color={color}
+                                    size={size}
+                                />
+                            ),
+                        }}
+                    />
+
+
+                    <Tab.Screen name="HistoryScreen"
+                        component={History}
+                        options={{
+                            title: "Histórico",
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialIcons
+                                    name="history"
+                                    color={color}
+                                    size={size}
+                                />
+                            ),
+                        }}
+                    />
+
                 </Tab.Navigator>
             </View>
 
@@ -115,12 +165,20 @@ export default function BottomTabs() {
             >
                 <Text style={styles.drawerTitle}>Menu</Text>
 
-                <TouchableOpacity style={styles.drawerItem} onPress={closeDrawer}>
+                <TouchableOpacity style={styles.drawerItem} onPress={() => {
+                    closeDrawer(); navigation.navigate("Home", {
+                        screen: "Início",
+                        params: {
+                            screen: "HomeScreen",
+                        },
+                    });
+                }}>
                     <MaterialIcons
                         name="home"
                         size={22}
                         color="#1976D2"
                         style={styles.drawerIcon}
+
                     />
                     <Text style={styles.drawerText}>Início</Text>
                 </TouchableOpacity>
