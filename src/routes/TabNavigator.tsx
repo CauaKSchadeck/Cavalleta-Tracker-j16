@@ -86,7 +86,7 @@ export default function BottomTabs() {
                 <Tab.Navigator
                     screenOptions={{
                         headerShown: false,
-                        tabBarActiveTintColor: '#1976D2',
+                        tabBarActiveTintColor: '(rgb(163, 204, 127)',
                         tabBarInactiveTintColor: '#757575',
                         tabBarStyle: {
                             height: 60,
@@ -176,7 +176,7 @@ export default function BottomTabs() {
                     <MaterialIcons
                         name="home"
                         size={22}
-                        color="#1976D2"
+                        color="(rgb(163, 204, 127)"
                         style={styles.drawerIcon}
 
                     />
@@ -187,7 +187,7 @@ export default function BottomTabs() {
                     <MaterialIcons
                         name="settings"
                         size={22}
-                        color="#1976D2"
+                        color="(rgb(163, 204, 127)"
                         style={styles.drawerIcon}
                     />
                     <Text style={styles.drawerText}>Configurações</Text>
@@ -197,7 +197,7 @@ export default function BottomTabs() {
                     <MaterialIcons
                         name="info"
                         size={22}
-                        color="#1976D2"
+                        color="(rgb(163, 204, 127)"
                         style={styles.drawerIcon}
                     />
                     <Text style={styles.drawerText}>Sobre</Text>

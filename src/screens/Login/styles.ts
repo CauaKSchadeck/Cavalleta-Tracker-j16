@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
 
         fontWeight: 'bold',
 
-        color: '#1976D2',
+        color: 'rgb(163, 204, 127)',
 
         textAlign: 'center',
 
@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
 
     button: {
 
-        backgroundColor: '#1976D2',
+        backgroundColor: 'rgb(163, 204, 127)',
 
         height: 50,
 

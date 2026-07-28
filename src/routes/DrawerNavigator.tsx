@@ -20,7 +20,7 @@ export default function DrawerNavigator() {
 
             screenOptions={{
                 headerShown: false,
-                drawerActiveTintColor: '#1976D2',
+                drawerActiveTintColor: 'rgb(139, 255, 193)',
                 drawerInactiveTintColor: '#555',
                 drawerLabelStyle: {
                     fontSize: 16,

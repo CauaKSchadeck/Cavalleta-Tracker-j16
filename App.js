@@ -19,7 +19,7 @@ export default function App() {
 // import { requestSmsPermissions } from './src/services/Smsgateway';
 // import { TrackerService } from './src/services/Trackerservice';
 
-// const TRACKER_NUMBER = '+5561996625743'; // número do chip dentro do J16
+// const TRACKER_NUMBER = ''; // número do chip dentro do J16
 
 // export default function TrackerScreen() {
 //   const serviceRef = useRef(null);
