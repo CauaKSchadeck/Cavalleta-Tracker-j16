@@ -14,14 +14,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TrackerCard from '../../components/Card/TrackerCard';
 import AddTrackerModal from '../../components/Modal/AddTrackerModal/AddTrackerModal';
 import EmptyList from '../../components/List/EmptyList';
-
+import type { Tracker } from '../../types/Tracker';
 import { styles } from './styles';
 
-interface Tracker {
-    id: string;
-    name: string;
-    phone: string;
-}
+
 
 interface Props {
     navigation: any;

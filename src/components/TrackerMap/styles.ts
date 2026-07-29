@@ -12,8 +12,8 @@ export default StyleSheet.create({
     },
 
     map: {
-        marginTop: 60,
-        height: 600,
+
+        height: '100%',
         width: '100%',
 
 

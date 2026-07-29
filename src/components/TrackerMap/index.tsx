@@ -33,7 +33,7 @@ export default function TrackerMap({ location }: Props) {
     }, [lngLat]);
 
     return (
-        <Map style={styles.map} mapStyle={MAP_STYLE} androidView="texture" >
+        <Map style={styles.map} mapStyle={MAP_STYLE} androidView="texture" compassPosition={{ top: 665, right: 16 }} >
             <Camera
                 ref={cameraRef}
                 initialViewState={{ center: lngLat, zoom: 15 }}

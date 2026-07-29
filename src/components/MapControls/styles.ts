@@ -1,0 +1,79 @@
+import { StyleSheet } from 'react-native';
+import { inlineStyles } from 'react-native-svg';
+
+
+
+export const styles = StyleSheet.create({
+
+
+
+    container: {
+        position: 'absolute',
+        right: 10,
+        bottom: 24,
+        alignItems: 'flex-start',
+    },
+    fab: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: 'rgb(163, 204, 127)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 2 },
+        position: 'absolute',
+        bottom: 10,
+        right: 345
+
+    },
+    his: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: 'rgb(163, 204, 127)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 2 },
+        position: 'absolute',
+        bottom: 595,
+        right: 345,
+    },
+    switchWrapper: {
+        width: 90,
+        height: 40,
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 6,
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 2 },
+        position: 'absolute',
+        bottom: 600,
+        right: 10,
+    },
+    signalIcon: {
+        top: 2,
+        left: 5,
+    },
+    switch: {
+
+        bottom: 25
+
+
+
+    }
+});
+
+
+
+
