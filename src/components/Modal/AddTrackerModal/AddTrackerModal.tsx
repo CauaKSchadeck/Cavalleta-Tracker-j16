@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import { styles } from './styles';
+import { normalizeToE164 } from '../../../utils/phone';
 
 interface Props {
 
@@ -83,11 +84,25 @@ export default function AddTrackerModal({
 
         }
 
+        if (phone.length < 10) {
+
+            Alert.alert(
+
+                'Aviso',
+
+                'Número inválido. Digite o DDD + número (ex: 61999999999).'
+
+            );
+
+            return;
+
+        }
+
         onAdd(
 
             name,
 
-            phone
+            normalizeToE164(phone)
 
         );
 

@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginBottom: 16,
         borderRadius: 8,
-        backgroundColor: '#1976D2',
+        backgroundColor: 'rgb(163, 204, 127)',
         paddingVertical: 14,
         alignItems: 'center',
     },

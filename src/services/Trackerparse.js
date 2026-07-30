@@ -3,10 +3,9 @@
  * em objetos JS fáceis de usar na UI.
  */
 
-// Ex: "<03-20 22:45>http://maps.google.com/maps?q=+22.601862,+113.832383"
-const LOCATION_REGEX = /<(\d{2}-\d{2}\s\d{2}:\d{2})>\s*(https?:\/\/maps\.google\.com\/maps\?q=\+?([\-\d.]+),\+?([\-\d.]+))/;
+// Aceita tanto "<03-20 22:45>http://..." quanto só "http://..." sem prefixo
+const LOCATION_REGEX = /(?:<(\d{2}-\d{2}\s\d{2}:\d{2})>\s*)?(https?:\/\/maps\.google\.com\/maps\?q=(-?[\d.]+),(-?[\d.]+))/;
 
-// Ex: "Battery:4.23V;GPRS:Offline;GSMSignal Level:25;ACC:OFF;GPS:OFF;Defense:ON;IMEI:...;TIMER:10,3600;SNEDS:3;HBT:180Sec;Defense:2;"
 const DELIVERY_REPORT_REGEX = /\b(?:torpedo entregue|sms entregue|sms delivered|sms sent|delivered|entregue|enviado)\b/i;
 const NO_SIGNAL_REGEX = /\b(?:sem sinal|no signal|gprs:offline|gps:off|sem serviço|sem rede|offline|sem linha)\b/i;
 
@@ -35,7 +34,7 @@ export function parseTrackerReply(rawMessage) {
     if (locationMatch) {
         return {
             type: 'location',
-            timestamp: locationMatch[1],
+            timestamp: locationMatch[1] ?? new Date().toISOString(),
             url: locationMatch[2],
             latitude: parseFloat(locationMatch[3]),
             longitude: parseFloat(locationMatch[4]),
@@ -76,6 +75,5 @@ export function parseTrackerReply(rawMessage) {
         return { type: 'reset', raw: message };
     }
 
-    // Qualquer outra resposta reconhecida cai aqui como genérica
     return { type: 'unknown', raw: message };
 }

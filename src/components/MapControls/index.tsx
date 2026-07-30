@@ -1,12 +1,14 @@
 // src/components/MapControls/index.tsx
 import React from 'react';
-import { View, TouchableOpacity, Switch, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Switch, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { styles } from './styles'
+import { styles } from './styles';
 
 type Props = {
     onOpenExternalMap: () => void;
     onShowLastLocation: () => void;
+    onRequestSmsLocation: () => void;
+    smsLoading: boolean;
     realTimeEnabled: boolean;
     onToggleRealTime: (value: boolean) => void;
 };
@@ -14,6 +16,8 @@ type Props = {
 export default function MapControls({
     onOpenExternalMap,
     onShowLastLocation,
+    onRequestSmsLocation,
+    smsLoading,
     realTimeEnabled,
     onToggleRealTime,
 }: Props) {
@@ -33,10 +37,22 @@ export default function MapControls({
                 <Ionicons name="time-outline" size={22} color="#fff" />
             </TouchableOpacity>
 
+            <TouchableOpacity
+                style={styles.sms}
+                onPress={onRequestSmsLocation}
+                activeOpacity={0.8}
+                disabled={smsLoading}
+            >
+                {smsLoading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                    <Ionicons name="chatbox-outline" size={22} color="#fff" />
+                )}
+            </TouchableOpacity>
+
             <TouchableOpacity style={styles.fab} onPress={onOpenExternalMap} activeOpacity={0.8}>
                 <Ionicons name="paper-plane-outline" size={20} color="#fff" />
             </TouchableOpacity>
         </View>
     );
 }
-

@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
     },
     primaryButton: {
-        backgroundColor: '#1976D2',
+        backgroundColor: 'rgb(163, 204, 127)',
         height: 45,
         borderRadius: 8,
         justifyContent: 'center',

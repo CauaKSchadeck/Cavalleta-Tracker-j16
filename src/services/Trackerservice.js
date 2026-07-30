@@ -17,25 +17,33 @@ export class TrackerService {
     }
 
     _handleIncoming({ originatingAddress, body }) {
-        // normaliza os últimos dígitos pra comparar números com/sem DDI
+
+
+
+
         const from = originatingAddress?.replace(/\D/g, '').slice(-9);
         const expected = this.trackerPhoneNumber.replace(/\D/g, '').slice(-9);
-        if (from !== expected) return;
 
-        const parsed = parseTrackerReply(body);
-        if (parsed.type === 'deliveryReport') {
+        console.log('📩 SMS recebido — de:', originatingAddress, '| esperado:', this.trackerPhoneNumber);
+        console.log('📩 Corpo bruto:', JSON.stringify(body));
+
+        if (from !== expected) {
+            console.log('⏭️ Ignorado — número não confere');
             return;
         }
 
-        // resolve a primeira promessa pendente que ainda não expirou
+        const parsed = parseTrackerReply(body);
+        console.log('🔍 Classificado como:', parsed.type, parsed);
+
+        if (parsed.type === 'deliveryReport') {
+            console.log('⏭️ Ignorado — é relatório de entrega');
+            return;
+        }
+
         const resolver = this.pendingResolvers.shift();
         if (resolver) resolver.resolve(parsed);
     }
 
-    /**
-     * Envia um comando e resolve com a resposta já parseada assim que chegar
-     * (ou rejeita por timeout).
-     */
     sendCommand(commandString) {
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {

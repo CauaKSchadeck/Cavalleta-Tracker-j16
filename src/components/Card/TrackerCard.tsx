@@ -48,6 +48,7 @@ export default function TrackerCard({
             style={{
                 backgroundColor: '#FFF',
                 borderRadius: 10,
+                width: 250,
                 padding: 15,
                 marginBottom: 15,
                 elevation: 2,
@@ -81,68 +82,35 @@ export default function TrackerCard({
                 >
                     <TouchableOpacity
                         onPress={() => onEdit(tracker)}
-                        style={{ marginRight: 12 }}
+                        style={{ right: 10, }}
                     >
                         <MaterialIcons
                             name="edit"
                             size={24}
-                            color="#1976D2"
+                            color="rgb(163, 204, 127)"
                         />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => onDelete(tracker.id)}
+                        onPress={() => onDelete(tracker.id)} style={{ left: 5, }}
                     >
                         <MaterialIcons
                             name="delete"
                             size={24}
-                            color="#D32F2F"
+                            color="rgb(163, 204, 127)"
                         />
                     </TouchableOpacity>
                 </View>
 
             </View>
 
-            <Text
-                style={{
-                    marginTop: 10,
-                    color: '#555',
-                }}
-            >
 
-                Número: {tracker.phone}
 
-            </Text>
 
-            <TouchableOpacity
 
-                style={{
-                    marginTop: 15,
-                    backgroundColor: '#1976D2',
-                    borderRadius: 8,
-                    height: 45,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
 
-                onPress={() => onLocate(tracker.id)}
 
-            >
-
-                <Text
-                    style={{
-                        color: '#FFF',
-                        fontWeight: 'bold',
-                    }}
-                >
-
-                    Localizar
-
-                </Text>
-
-            </TouchableOpacity>
-
-        </View>
+        </View >
 
     );
 

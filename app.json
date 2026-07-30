@@ -11,6 +11,11 @@
       "bundleIdentifier": "com.anonymous.CavalletaConnectj16"
     },
     "android": {
+      "permissions": [
+        "android.permission.SEND_SMS",
+        "android.permission.RECEIVE_SMS",
+        "android.permission.READ_SMS"
+      ],
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",

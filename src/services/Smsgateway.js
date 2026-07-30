@@ -20,9 +20,13 @@ import SmsAndroid from 'react-native-get-sms-android';
 import SmsListener from 'react-native-android-sms-listener';
 
 export async function requestSmsPermissions() {
+    console.log('1️⃣ Entrou em requestSmsPermissions, Platform.OS:', Platform.OS);
+
     if (Platform.OS !== 'android') {
         throw new Error('Envio/recebimento silencioso de SMS só é suportado no Android.');
     }
+
+    console.log('2️⃣ Antes de PermissionsAndroid.requestMultiple');
 
     const granted = await PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.SEND_SMS,
@@ -30,12 +34,18 @@ export async function requestSmsPermissions() {
         PermissionsAndroid.PERMISSIONS.READ_SMS,
     ]);
 
-    const allGranted = Object.values(granted).every(
-        (status) => status === PermissionsAndroid.RESULTS.GRANTED
+    console.log('🔍 Resultado das permissões de SMS:', granted);
+
+    const denied = Object.entries(granted).filter(
+        ([, status]) => status !== PermissionsAndroid.RESULTS.GRANTED
     );
 
-    if (!allGranted) {
-        throw new Error('Permissões de SMS não concedidas.');
+    if (denied.length > 0) {
+        const deniedNames = denied.map(([permission]) => permission).join(', ');
+        throw new Error(
+            `Permissões de SMS não concedidas: ${deniedNames}. ` +
+            `Verifique em Ajustes > Apps > Permissões > SMS.`
+        );
     }
 
     return true;
@@ -47,12 +57,20 @@ export async function requestSmsPermissions() {
  * @param {string} command Texto do comando (ex: "STATUS#")
  */
 export function sendSmsToTracker(trackerPhoneNumber, command) {
+    console.log('📤 Tentando enviar SMS para:', trackerPhoneNumber, '| comando:', command);
+
     return new Promise((resolve, reject) => {
         SmsAndroid.autoSend(
             trackerPhoneNumber,
             command,
-            (failMessage) => reject(new Error(failMessage)),
-            (successMessage) => resolve(successMessage)
+            (failMessage) => {
+                console.log('❌ Falha ao enviar SMS:', failMessage);
+                reject(new Error(failMessage));
+            },
+            (successMessage) => {
+                console.log('✅ SMS enviado:', successMessage);
+                resolve(successMessage);
+            }
         );
     });
 }
@@ -64,7 +82,11 @@ export function sendSmsToTracker(trackerPhoneNumber, command) {
  * @param {(message: {originatingAddress: string, body: string, timestamp: number}) => void} onMessage
  */
 export function listenForIncomingSms(onMessage) {
+    console.log('👂 Registrando listener de SMS recebidos');
+
     const subscription = SmsListener.addListener((message) => {
+        console.log('📩 SMS recebido de:', message.originatingAddress, '| corpo:', message.body);
+
         onMessage({
             originatingAddress: message.originatingAddress,
             body: message.body,
